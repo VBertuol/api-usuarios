@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:3000
+
+### 1) Cadastrar usuário
+# @name cadastrar
+POST {{baseUrl}}/api/usuarios/cadastro
+Content-Type: application/json
+
+{
+    "nome": "João",
+    "sobrenome": "Silva",
+    "email": "joao@email.com",
+    "usuario": "joaosilva",
+    "senha": "senha123"
+}
+
+### 2) Login (guarda o token em {{login.response.body.dados.token}})
+# @name login
+POST {{baseUrl}}/api/usuarios/login
+Content-Type: application/json
+
+{
+    "email": "joao@email.com",
+    "senha": "senha123"
+}
+
+### 3) Listar sem token (deve retornar 401)
+GET {{baseUrl}}/api/usuarios
+
+### 4) Listar com token
+GET {{baseUrl}}/api/usuarios
+Authorization: Bearer {{login.response.body.dados.token}}
+
+### 5) Buscar por ID
+GET {{baseUrl}}/api/usuarios/1
+Authorization: Bearer {{login.response.body.dados.token}}
+
+### 6) Alterar
+PUT {{baseUrl}}/api/usuarios/1
+Authorization: Bearer {{login.response.body.dados.token}}
+Content-Type: application/json
+
+{
+    "nome": "João Pedro",
+    "sobrenome": "Silva Santos"
+}
+
+### 7) Excluir
+DELETE {{baseUrl}}/api/usuarios/1
+Authorization: Bearer {{login.response.body.dados.token}}
